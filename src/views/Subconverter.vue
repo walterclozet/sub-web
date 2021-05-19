@@ -255,6 +255,7 @@ export default {
           "自动判断客户端": "auto",
         },
         customBackend: {
+          "wc2": "http://s.wc2.in/sub?",
           "localhost:25500 本地版": "http://localhost:25500/sub?",
           "sub-beta.vercel.app": "https://sub-beta.vercel.app/sub?",
           "subcon.dlj.tf(subconverter作者提供-稳定)":
@@ -264,6 +265,7 @@ export default {
           "sub.id9.cc(品云转换)": "https://sub.id9.cc/sub?",
         },
         backendOptions: [
+          { value: "http:/s.wc2.in/sub?" },
           { value: "http://localhost:25500/sub?" },
           { value: "https://sub-beta.now.sh/sub?" },
           { value: "https://subcon.dlj.tf/sub?" },
