@@ -95,6 +95,8 @@
                       <el-row :gutter="10">
                         <el-col :span="12"><el-checkbox v-model="form.udp" @change="needUdp = true" label="启用 UDP"></el-checkbox></el-col>
                         <el-col :span="12"><el-checkbox v-model="form.tfo" label="启用 TFO"></el-checkbox></el-col>                        
+                      <el-row>
+                        <el-checkbox v-model="form.scv" label="跳过证书验证"></el-checkbox>
                       </el-row>
                       <el-row :gutter="10">
                         <el-col :span="12"><el-checkbox v-model="form.appendType" label="插入节点类型"></el-checkbox></el-col>
@@ -236,8 +238,6 @@ export default {
       options: {
         clientTypes: {
           Clash: "clash",
-          ClashR: "clashr",
-          Surge2: "surge&ver=2",
           Surge3: "surge&ver=3",
           Surge4: "surge&ver=4",
           Quantumult: "quan",
@@ -440,11 +440,6 @@ export default {
                 label: "FlowerCloud",
                 value:
                   "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/flowercloud.ini"
-              },
-              {
-                label: "NyanCAT",
-                value:
-                  "https://cdn.jsdelivr.net/gh/SleepyHeeead/subconverter-config@master/remote-config/customized/nyancat.ini"
               },
               {
                 label: "Nexitally",
@@ -742,18 +737,18 @@ export default {
           }
         })
         .then(res => {
-          if (res.data.Code === 1 && res.data.url !== "") {
+          if (res.data.code === 0 && res.data.data.url !== "") {
             this.$message.success(
               "远程配置上传成功，配置链接已复制到剪贴板，有效期三个月望知悉"
             );
 
             // 自动填充至『表单-远程配置』
-            this.form.remoteConfig = res.data.Url;
+            this.form.remoteConfig = res.data.data.url;
             this.$copyText(this.form.remoteConfig);
 
             this.dialogUploadConfigVisible = false;
           } else {
-            this.$message.error("远程配置上传失败：" + res.data.Message);
+            this.$message.error("远程配置上传失败: " + res.data.msg);
           }
         })
         .catch(() => {
